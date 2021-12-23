@@ -9,6 +9,7 @@ interface StudentActions {
 
 class Student {
   {static} studentId: Integer
+  cardId: Integer
   inputDate: Date
   outputDate: Date
   breaks: Object[] break
