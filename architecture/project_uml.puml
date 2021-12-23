@@ -1,0 +1,33 @@
+@startuml
+
+interface StudentActions {
+  logout()
+  login()
+  takeShortBreak()
+  takeLongBreak()
+}
+
+class Student {
+  {static} studentId: Integer
+  inputDate: Date
+  outputDate: Date
+  breaks: Object[] break
+  breakType: Object
+  
+  logout()
+  login()
+  takeShortBreak()
+  takeLongBreak()
+}
+
+class Library {
+  {static} libraryId: Integer
+  capacity: Integer
+  intensity: String
+}
+
+' Student and Library have a association
+Student "0..*" - "1..*" Library : association
+class Student implements StudentActions
+
+@enduml
