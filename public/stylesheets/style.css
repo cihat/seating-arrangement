@@ -84,3 +84,68 @@ body {
   padding: 3rem 8rem;
   margin: auto;
 }
+
+@media screen and (min-width: 325px) {
+  .seat_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .seat_container {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.seat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem;
+}
+
+.active {
+  background-color: red !important;
+  opacity: 0.5;
+}
+
+.active:hover {
+  transform: scale(1) !important;
+  cursor: not-allowed !important;
+}
+
+.seat > button:active {
+  background-color: none;
+}
+
+.seat > button {
+  min-height: 100px;
+  width: 90%;
+  height: 90%;
+  font-size: 2.5rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-image: url("../images/chair.png");
+  background-position: center;
+  /* background-size: 2.2rem 2.1rem; */
+  background-size: 75% 100%;
+  color: rgb(255, 0, 0);
+  background-color: rgb(176, 216, 206);
+  border-radius: 100px;
+  border: none;
+}
+
+.seat > button:hover {
+  cursor: pointer;
+  transform: scale(1.4);
+  transition: 400ms all;
+}
+
+.seat > button:active {
+  background: repeating-linear-gradient(45deg, black, transparent 100px);
+}
+
+.seat > button:visited {
+  background: repeating-linear-gradient(45deg, black, transparent 100px);
+}
