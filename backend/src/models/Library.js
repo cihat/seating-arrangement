@@ -11,7 +11,7 @@ const librarySchema = new Schema({
   totalCapacity: Number,
   floorsCapacity: Array,
   seatsDetails: {
-    type: Array,
+    type: Schema.Types.Mixed,
     status: Boolean,
     sittingStudentId: {
       type: Schema.Types.ObjectId,
