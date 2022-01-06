@@ -9,11 +9,12 @@ interface StudentActions {
 
 class Student {
   {static} studentId: Integer
-  cardId: Integer
+  libraryId: ObjectId
+  selectedSeatNumber: Integer
   inputDate: Date
   outputDate: Date
-  breaks: Object[] break
-  breakType: Object
+  activeTime: Integer
+  breaksUsed: Array[] breaks
   
   logout()
   login()
@@ -23,8 +24,15 @@ class Student {
 
 class Library {
   {static} libraryId: Integer
-  capacity: Integer
+  totalCapacity: Integer
+  floorsCapacity: Array{} floor
+  numberOfTables: Array{} table
+  seatsDetails: Array{} seat
   intensity: String
+
+  toAccept()
+  cancel()
+
 }
 
 ' Student and Library have a association
