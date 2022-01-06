@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const autopopulate = require('mongoose-autopopulate')
 const { Schema } = mongoose
 
-const userSchema = new Schema(
+const studentSchema = new Schema(
   {
     studentId: {
       type: Number,
@@ -34,6 +34,11 @@ const userSchema = new Schema(
       },
     },
     selectedSeatNumber: Number,
+    selectedSeat: {
+      type: Schema.Types.ObjectId,
+      ref: 'Library',
+      autopopulate: { maxDepth: 1 },
+    },
     inputDate: Date,
     outputDate: Date,
     activeTime: Number,
@@ -41,6 +46,6 @@ const userSchema = new Schema(
   { timestamps: true }
 )
 
-userSchema.plugin(autopopulate)
+studentSchema.plugin(autopopulate)
 
-module.exports = mongoose.model('Student', userSchema)
+module.exports = mongoose.model('Student', studentSchema)
