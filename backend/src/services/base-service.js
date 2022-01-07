@@ -9,7 +9,7 @@ class BaseService {
   }
 
   async load() {
-    return this.model.find()
+    return this.model.find({})
   }
 
   async insert(object) {
@@ -18,6 +18,10 @@ class BaseService {
 
   async removeBy(property, value) {
     return this.model.deleteOne({ [property]: value })
+  }
+
+  async removeAll(options) {
+    return this.model.deleteMany(options)
   }
 
   async update(id, object) {
@@ -30,6 +34,14 @@ class BaseService {
 
   async findBy(property, value) {
     return this.model.findById({ [property]: value })
+  }
+
+  async findAll() {
+    return this.model.find()
+  }
+
+  async findOne(property, value) {
+    return this.model.findOne({ [property]: value })
   }
 }
 
