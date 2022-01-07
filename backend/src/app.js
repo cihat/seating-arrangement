@@ -3,6 +3,12 @@ const express = require('express')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
+  
+const session = require('express-session')
+const MongoStore = require('connect-mongo')(session)
+const passport = require('passport')
+const mongooseConnection = require('./database-connection')
+const Student = require('./models/Student')
 
 const indexRouter = require('./routes/index')
 const studentsRouter = require('./routes/students')
@@ -11,6 +17,29 @@ const librariesRouter = require('./routes/libraries')
 require('./database-connection')
 
 const app = express()
+
+//* Authentication
+app.use(
+  session({
+    store: new MongoStore({
+      mongooseConnection,
+      stringify: false,
+    }),
+    secret: 'thisissupposedtobesecret',
+    cookie: {
+      maxAge: 24 * 60 * 60 * 1000,
+      sameSite: process.env.NODE_ENV === 'production' && 'none',
+      secure: process.env.NODE_ENV === 'production',
+    },
+  })
+)
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+passport.use(Student.createStrategy())
+passport.serializeUser(Student.serializeUser())
+passport.deserializeUser(Student.deserializeUser())
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
