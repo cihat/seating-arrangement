@@ -1,12 +1,12 @@
 const express = require('express')
-const Library = require('../models/library')
+const { libraryService, studentService } = require('../services')
 
 const router = express.Router()
 
+//* Get all libraries
 router.get('/', async (req, res) => {
-  await Library.find({ _id: '61d6871991e8443c13878546' })
-    .then(lib => res.send(lib[0]))
-    .catch(error => res.send(error))
+  const library = await libraryService.load()
+  res.send(library)
 })
 
 router.get('/ping', (req, res) => {
