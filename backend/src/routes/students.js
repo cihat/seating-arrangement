@@ -1,7 +1,5 @@
 const express = require('express')
 const { Router } = express
-const Student = require('../models/Student')
-const Library = require('../models/Library')
 const shortId = require('shortid')
 
 const { libraryService, studentService } = require('../services')
@@ -20,6 +18,7 @@ router.get('/create-one', async (req, res, next) => {
   try {
     if (students.length === 0) {
       students = await studentService.insert({
+        name: 'Cihat Salik',
         studentId: shortId.generate(),
         libraryId: null,
         breaksUsed: {
