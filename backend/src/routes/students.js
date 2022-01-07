@@ -1,61 +1,94 @@
 const express = require('express')
 const { Router } = express
-const Student = require('../models/student')
-const Library = require('../models/library')
+const Student = require('../models/Student')
+const Library = require('../models/Library')
+const shortId = require('shortid')
+
+const { libraryService, studentService } = require('../services')
 
 const router = Router()
 
 router.get('/', async (req, res) => {
-  res.send(await Student.find({}))
+  const students = await studentService.load()
+  res.send(students)
 })
 
-router.get('/sign-up/:studentId', async (req, res, next) => {
-  const { studentId } = req.params
+//* Create library for testing
+router.get('/create-one', async (req, res, next) => {
+  let students = await studentService.load()
 
   try {
-    const sameStudentId = await Student.find({ studentId })
-    if (sameStudentId.length > 1) {
-      res.send({
-        error: 'Student ID is already used.',
+    if (students.length === 0) {
+      students = await studentService.insert({
+        studentId: shortId.generate(),
+        libraryId: null,
+        breaksUsed: {
+          short: {
+            counter: 0,
+            dates: [],
+          },
+          long: {
+            counter: 0,
+            sessionLimit: 2,
+            dates: [],
+          },
+        },
+        selectedSeatNumber: 1,
+        inputDate: new Date(),
       })
     }
-    const student = await Student.create({
-      studentId,
-      libraryId: '61d6e2ca7bea1b6203056ee6',
-      breaksUsed: {
-        short: {
-          counter: 0,
-          dates: [],
-        },
-        long: {
-          counter: 0,
-          sessionLimit: 2,
-          dates: [],
-        },
-      },
-      selectedSeatNumber: 1,
-      inputDate: new Date(),
-    })
 
-    res.send(student)
+    res.send(students)
   } catch (error) {
-    res.redirect('/students')
+    next(error)
   }
 })
 
-router.get('/:studentId/select-empty-seat/:selectedSeatNumber', (req, res, next) => {
-  const { studentId, selectedSeatNumber } = req.params
+router.get('/:studentId/seatId/:seatId', async (req, res, next) => {
+  const { studentId, seatId } = req.params
 
-  Student.findById(studentId, (err, student) => {
-    student.selectedSeatNumber = selectedSeatNumber
-    const selectedSeat = student.libraryId.seatsDetails[selectedSeatNumber - 1]
-    selectedSeat.status = true
-    selectedSeat.sittingStudentId = studentId
+  try {
+    let firatLibrary = await libraryService.findOne('libraryName', 'Firat University Library')
+    const student = await studentService.update(studentId, {
+      libraryId: firatLibrary._id,
+      selectedSeatNumber: seatId,
+      inputDate: new Date(),
+    })
 
-    student.save()
-    res.send(student)
-  })
+    await libraryService.update(firatLibrary._id, {
+      $set: {
+        seatsDetails: {
+          ...firatLibrary.seatsDetails,
+          [seatId]: {
+            ...firatLibrary.seatsDetails[seatId],
+            studentId: student._id,
+            status: true,
+            sittingStudentId: student.studentId,
+          },
+        },
+      },
+    })
+    const updLib = await libraryService.find(firatLibrary._id)
+
+    res.send(updLib)
+  } catch (error) {
+    next(error)
+  }
 })
+
+// router.get('/:studentId/select-empty-seat/:selectedSeatNumber', (req, res, next) => {
+//   const { studentId, selectedSeatNumber } = req.params
+
+//   Student.findById(studentId, (err, student) => {
+//     student.selectedSeatNumber = selectedSeatNumber
+//     const selectedSeat = student.libraryId.seatsDetails[selectedSeatNumber - 1]
+//     selectedSeat.status = true
+//     selectedSeat.sittingStudentId = studentId
+
+//     student.save()
+//     res.send(student)
+//   })
+// })
 
 //! Authentication
 // TODO: Create new student sign-up --> router.post("/sign-up")
