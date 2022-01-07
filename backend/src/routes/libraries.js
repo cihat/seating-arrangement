@@ -1,41 +1,62 @@
 const express = require('express')
 const { Router } = express
-const Student = require('../models/student')
-const Library = require('../models/library')
+const { libraryService, studentService } = require('../services')
+const shortId = require('shortid')
 
 const { createEmptySeats } = require('../config/')
 
 const router = Router()
 
+//! Get all libraries
 router.get('/', async (req, res) => {
-  await Library.find({ _id: '61d6e2ca7bea1b6203056ee6' })
-    .then(lib => res.send(lib))
-    .catch(error => res.send(error))
+  const library = await libraryService.load()
+  res.send(library)
 })
 
-router.get('/create-library/:libraryId', async (req, res, next) => {
-  // const { libraryId, totalCapacity, floorsCapacity, numberOfTables, seatsDetails, intensity } = req.query
-  const { libraryId } = req.params
+//! Create library for testing
+router.get('/create-one', async (req, res) => {
+  let libraries = await libraryService.load()
 
   try {
-    const sameLibraryId = await Library.find({ libraryId })
-    if (sameLibraryId.length > 1) {
-      res.send({
-        error: 'Library ID is already used.',
+    if (libraries.length === 0) {
+      libraries = await libraryService.insert({
+        libraryId: shortId.generate(),
+        libraryName: 'Firat University Library',
+        totalCapacity: 800,
+        floorsCapacity: [200, 150, 300, 150],
+        seatsDetails: createEmptySeats(800),
+        intensity: 'low',
       })
     }
 
-    const library = await Library.create({
-      libraryId,
-      libraryName: 'Firat University Library',
-      totalCapacity: 800,
-      floorsCapacity: [200, 150, 300, 150],
-      seatsDetails: createEmptySeats(800),
-      intensity: 'low',
-    })
+    res.send(libraries)
+  } catch (error) {
+    next(error)
+  }
+})
+
+//! Get one library with libraryId or _id
+router.get('/:libraryId', async (req, res, next) => {
+  const { libraryId } = req.params
+  let library = {}
+
+  try {
+    if (libraryId.length < 24) {
+      library = await libraryService.findOne('libraryId', libraryId)
+      if (!library) {
+        res.send({ message: 'Library not found' })
+        next()
+      }
+    } else {
+      library = await libraryService.find(libraryId)
+      if (!library) {
+        res.send({ message: 'Library not found' })
+        next()
+      }
+    }
     res.send(library)
   } catch (error) {
-    res.redirect('/libraries')
+    next(error)
   }
 })
 
