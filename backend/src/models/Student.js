@@ -5,7 +5,7 @@ const { Schema } = mongoose
 const studentSchema = new Schema(
   {
     studentId: {
-      type: Number,
+      type: String,
       unique: true,
     },
     libraryId: {

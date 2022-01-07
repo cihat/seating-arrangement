@@ -5,7 +5,7 @@ const { Schema } = mongoose
 const librarySchema = new Schema({
   libraryName: String,
   libraryId: {
-    type: Number,
+    type: String,
     unique: true,
   },
   totalCapacity: Number,
