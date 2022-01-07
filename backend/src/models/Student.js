@@ -1,9 +1,17 @@
 const mongoose = require('mongoose')
 const autopopulate = require('mongoose-autopopulate')
 const { Schema } = mongoose
+const passportLocalMongoose = require('passport-local-mongoose')
 
 const studentSchema = new Schema(
   {
+    name: {
+      type: String,
+      required: true,
+      minlength: 2,
+      maxlength: 64,
+    },
+    sessionId: String,
     studentId: {
       type: String,
       unique: true,
@@ -47,5 +55,9 @@ const studentSchema = new Schema(
 )
 
 studentSchema.plugin(autopopulate)
+studentSchema.plugin(passportLocalMongoose, {
+  usernameField: 'studentId',
+  populateFields: ['name', 'sessionId'],
+})
 
 module.exports = mongoose.model('Student', studentSchema)
