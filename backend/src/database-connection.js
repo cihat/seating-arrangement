@@ -12,6 +12,6 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => console.log('Database connection established.🚀'))
-  .catch(console.log)
+// .catch(console.log)
 
 module.exports = mongoose.connection
