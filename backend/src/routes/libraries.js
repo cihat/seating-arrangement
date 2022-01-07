@@ -3,8 +3,7 @@ const { Router } = express
 const Student = require('../models/student')
 const Library = require('../models/library')
 
-const library_dummy_data = require('../config/dummy_data')
-const createEmptySeats = require('../config/createEmptySeats')
+const { createEmptySeats } = require('../config/')
 
 const router = Router()
 
