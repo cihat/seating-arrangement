@@ -1,4 +1,4 @@
-# stack
+# Seating Arrangement
 
 A starter repository for MongoDB, Node.js, and Vue.js, with a local environment based on Docker.
 
