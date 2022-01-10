@@ -1,5 +1,5 @@
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 import HelloWorld from '@/components/hello-world.vue'
 
@@ -8,16 +8,26 @@ export default {
   components: {
     HelloWorld,
   },
-  created() {
-    this.fetchUsers()
-  },
   methods: {
-    ...mapActions(['fetchUsers']),
+    ...mapActions(['fetchUsers', 'fetchLibrary']),
+  },
+  created() {
+    this.fetchLibrary()
+  },
+  computed: {
+    ...mapState({
+      libraries: 'libraries',
+    }),
   },
 }
 </script>
 
 <template lang="pug">
 .home
-  hello-world(msg="Welcome to your stack.")
+  hello-world(msg="Libraries")
+  .libraries
+    pre
+      code
+        | {{ JSON.stringify(libraries, null, 2) }}
+
 </template>
