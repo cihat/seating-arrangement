@@ -1,12 +1,31 @@
+<script>
+import Header from './components/header.vue'
+export default {
+  name: 'App',
+  components: {
+    Header,
+  },
+}
+</script>
+
 <template lang="pug">
 #app
-  #nav
-    router-link(to="/") Home
-    span &nbsp;|&nbsp;
-    router-link(to="/about") About
-  router-view
+  Header.header
+  router-view.content
 </template>
 
 <style lang="scss">
-@import '@/assets/theme.scss';
+@import '@/assets/styles/theme.scss';
+@import './assets/styles/reset.css';
+
+.header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+}
+
+.content {
+  position: relative;
+  top: 120px;
+}
 </style>
