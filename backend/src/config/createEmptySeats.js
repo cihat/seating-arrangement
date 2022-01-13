@@ -7,6 +7,7 @@ const createEmptySeats = seats => {
       seatNumber: index + 1,
     }
   })
+  emptySeats.shift()
 
   return emptySeats
 }
