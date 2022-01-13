@@ -1,3 +1,9 @@
+<script>
+export default {
+  name: 'About',
+}
+</script>
+
 <template lang="pug">
 .about
   h1 This is an about page.
