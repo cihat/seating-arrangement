@@ -5,17 +5,18 @@ export default {
 </script>
 
 <template lang="pug">
-header.header
-  .logo
-    router-link(to="/")
-      img(src='../assets/firat-logo.png')
-  nav
-    .nav-wrapper
-      router-link(to="/") Libraries
-      router-link(to="/seats") Seat Selection
-    .auth-wrapper
-      router-link(to="/login") Login
-      router-link(to="/register") Register
+.grid
+  header.header.col.col-12.col-sm-6.col-md-4
+    .logo
+      router-link(to="/")
+        img(src='../assets/firat-logo.png')
+    nav
+      .nav-wrapper
+        router-link(to="/") Libraries
+        router-link(to="/seats") Seat Selection
+      .auth-wrapper
+        router-link(to="/login") Login
+        router-link(to="/register") Register
 </template>
 
 <style lang="scss" scoped>

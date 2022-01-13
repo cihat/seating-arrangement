@@ -9,7 +9,8 @@ export default {
 </script>
 
 <template lang="pug">
-.seats
-  h1 This is an seats page.
-  Seat
+.grid
+  .seats.col.col-12.col-sm-6.col-md-4
+    h1 This is an seats page.
+    Seat
 </template>

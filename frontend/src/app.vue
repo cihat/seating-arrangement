@@ -15,8 +15,7 @@ export default {
 </template>
 
 <style lang="scss">
-@import '@/assets/styles/theme.scss';
-@import './assets/styles/reset.css';
+@import '@/assets/styles/index.scss';
 
 .header {
   width: 100%;
