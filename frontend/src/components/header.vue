@@ -7,11 +7,12 @@ export default {
 <template lang="pug">
 header.header
   .logo
-    img(src='../assets/firat-logo.png')
+    router-link(to="/")
+      img(src='../assets/firat-logo.png')
   nav
     .nav-wrapper
       router-link(to="/") Libraries
-      router-link(to="/about") Seat Selection
+      router-link(to="/seats") Seat Selection
     .auth-wrapper
       router-link(to="/login") Login
       router-link(to="/register") Register
@@ -19,6 +20,7 @@ header.header
 
 <style lang="scss" scoped>
 .header {
+  z-index: 100;
   height: 120px;
   display: flex;
   justify-content: space-evenly;
