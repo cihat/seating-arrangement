@@ -10,18 +10,21 @@ const librarySchema = new Schema({
   },
   totalCapacity: Number,
   floorsCapacity: Array,
-  seatsDetails: {
-    type: Schema.Types.Mixed,
-    status: Boolean,
-    sittingStudentId: {
-      type: Schema.Types.ObjectId,
-      ref: 'Student',
-      autopopulate: { maxDepth: 1 },
-      default: {},
+  seatsDetails: [
+    {
+      type: Schema.Types.Mixed,
+      status: Boolean,
+      sittingStudentId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Student',
+        autopopulate: { maxDepth: 1 },
+        default: {},
+      },
+      seatNumber: Number,
+      numberOfTables: Number,
+      default: [],
     },
-    seatNumber: Number,
-    numberOfTables: Number,
-  },
+  ],
   intensity: String,
 })
 
