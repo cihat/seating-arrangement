@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 })
 
 //! Create library for testing
-router.get('/create-one', async (req, res) => {
+router.get('/create-one', async (req, res, next) => {
   let libraries = await libraryService.load()
 
   try {
