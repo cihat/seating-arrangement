@@ -106,7 +106,7 @@ We can save energy by turning off the lights in places where there is no residen
 
 MIT License
 
-Copyright (c) 2020 Armagan Amcalar
+Copyright (c) 2022 Cihat SALİK
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
